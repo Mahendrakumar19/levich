@@ -20,6 +20,3 @@ Notes:
   - `UPDATE_BID` — server -> all when bid accepted
   - `BID_REJECTED` — server -> bidder when bid invalid (OUTBID / AUCTION_ENDED)
 - Concurrency: server uses per-item `async-mutex` locks to ensure only the first simultaneous bid is accepted.
-
-Next steps for submission:
-- Push to GitHub and deploy (Render/Vercel) following standard deployment guides.
