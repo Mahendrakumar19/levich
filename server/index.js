@@ -26,6 +26,16 @@ function getMutex(itemId) {
   return mutexes.get(itemId)
 }
 
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'Live Auction API Running',
+    endpoints: {
+      items: '/items'
+    },
+    serverTime: Date.now()
+  })
+})
+
 app.get('/items', (req, res) => {
   // Return items and server time for client sync
   res.json({ items, serverTime: Date.now() })
