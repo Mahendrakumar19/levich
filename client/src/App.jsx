@@ -93,6 +93,17 @@ export default function App() {
       }
     })
 
+    socket.on('AUCTIONS_RESET', ({ items: resetItems, serverTime }) => {
+      setOffset(serverTime - Date.now())
+      const mapped = resetItems.map(it => ({
+        ...it,
+        flash: false,
+        status: it.highestBidder === clientId ? 'winning' : ''
+      }))
+      mapped.forEach(it => statusRef.current.set(it.id, it.status || ''))
+      setItems(mapped)
+    })
+
     return () => socket.disconnect()
   }, [clientId])
 
@@ -113,6 +124,15 @@ export default function App() {
     socketRef.current.emit('BID_PLACED', { itemId: item.id, amount: newAmount, bidderId: clientId })
   }
 
+  async function resetAuctions() {
+    try {
+      const res = await axios.post(`${SERVER}/reset`)
+      // Socket will broadcast reset to all clients
+    } catch (err) {
+      console.error('Reset failed:', err)
+    }
+  }
+
   return (
     <div className="app">
       <header>
@@ -120,7 +140,10 @@ export default function App() {
           <h1>Live Auction</h1>
           <div className="subtitle">Real-time final-seconds bidding</div>
         </div>
-        <div className="me">You: <strong>{clientId}</strong></div>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button className="reset" onClick={resetAuctions}>Reset Auctions</button>
+          <div className="me">You: <strong>{clientId}</strong></div>
+        </div>
       </header>
 
       <main>

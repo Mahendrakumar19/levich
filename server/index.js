@@ -41,6 +41,19 @@ app.get('/items', (req, res) => {
   res.json({ items, serverTime: Date.now() })
 })
 
+app.post('/reset', (req, res) => {
+  // Reset all auctions (for testing)
+  const now = Date.now()
+  const minute = 60 * 1000
+  items.forEach((item, i) => {
+    item.currentBid = item.startingPrice
+    item.highestBidder = null
+    item.endTime = now + (10 + i * 2) * minute
+  })
+  io.emit('AUCTIONS_RESET', { items, serverTime: now })
+  res.json({ success: true, items, serverTime: now })
+})
+
 io.on('connection', (socket) => {
   socket.on('BID_PLACED', async (data) => {
     const { itemId, amount, bidderId } = data || {}

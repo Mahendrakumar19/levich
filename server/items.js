@@ -9,7 +9,7 @@ module.exports = [
     startingPrice: 50,
     currentBid: 50,
     highestBidder: null,
-    endTime: now + 2 * minute
+    endTime: now + 10 * minute
   },
   {
     id: 'item-2',
@@ -17,7 +17,7 @@ module.exports = [
     startingPrice: 30,
     currentBid: 30,
     highestBidder: null,
-    endTime: now + 3 * minute
+    endTime: now + 12 * minute
   },
   {
     id: 'item-3',
@@ -25,7 +25,7 @@ module.exports = [
     startingPrice: 120,
     currentBid: 120,
     highestBidder: null,
-    endTime: now + 4 * minute
+    endTime: now + 13 * minute
   },
   {
     id: 'item-4',
@@ -33,6 +33,6 @@ module.exports = [
     startingPrice: 5,
     currentBid: 5,
     highestBidder: null,
-    endTime: now + 5 * minute
+    endTime: now + 15 * minute
   }
 ]
